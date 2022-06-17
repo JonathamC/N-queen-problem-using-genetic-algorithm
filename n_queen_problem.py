@@ -1,6 +1,9 @@
 import random
 
 def generateStartingPopulation(size): 
+    """ 
+    Generate
+    """
     populations = [] 
     for _ in range(size): 
         temp = []
@@ -12,7 +15,7 @@ def generateStartingPopulation(size):
     return populations
 
 def convertTo2DMatrix(chromosome):
-    chessboard = [["_" for _ in range(8)] for _ in range(8)]
+    chessboard = [["-" for _ in range(8)] for _ in range(8)]
     column = 0
     for row in chromosome: 
         chessboard[row][column] = "Q"
@@ -21,11 +24,45 @@ def convertTo2DMatrix(chromosome):
 
 def printMatrix(matrix): 
     for i in matrix: 
-        print(i)
-        
+        for j in i: 
+            print("{}  ".format(j), end="")
+        print()
 
-populationSize = int(input("Choose starting population: "))
-population = generateStartingPopulation(populationSize)
-print(population[0])
-matrix = convertTo2DMatrix(population[0])
+def TopDownDiagonalMatrixTraversal(matrix): 
+    """
+    Traverse matrix from top left to bottom right corner. 
+    """
+    result = [] 
+
+    for l in range(2*8-1): 
+        t = max(0, l+1-8)
+        b = min(l, 8-1)
+        temp = []
+        for i in range(t, b + 1): 
+            temp.append(matrix[i][l-i])
+        result.append(temp)
+    return result
+
+def bottomUpDiagonalMatrixTraversal(chromosome): 
+    """
+    Traverse matrix from top right to bottom left corner. 
+
+    To achieve this result without coding new traversal method,
+    just simply flip the matrix horizontally and call TopDownDiagonalMatrixTraversal. 
+    """
+    revChromosome = chromosome[::-1]
+    revMatrix = convertTo2DMatrix(revChromosome)
+    printMatrix(revMatrix)
+    return TopDownDiagonalMatrixTraversal(revMatrix)
+
+def fitness(): 
+
+    return
+
+# populationSize = int(input("Choose starting population: "))
+# population = generateStartingPopulation(populationSize)
+# print(population[0])
+matrix = convertTo2DMatrix([2,3,0,6,4,2,7,1])
 printMatrix(matrix)
+print("\n")
+s = bottomUpDiagonalMatrixTraversal([2,3,0,6,4,2,7,1])
