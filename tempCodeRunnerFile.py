@@ -1,1 +1,3 @@
-([2,3,0,6,4,2,7,1])
+# prevent selecting same parent for parent1 and parent2 
+            while p2 == p1: 
+                p2 = populationWithFitness[randomIndexGenerator(selectionFactor)][1]
