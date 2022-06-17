@@ -28,7 +28,7 @@ def printMatrix(matrix):
             print("{}  ".format(j), end="")
         print()
 
-def TopDownDiagonalMatrixTraversal(matrix): 
+def topDownDiagonalMatrixTraversal(matrix): 
     """
     Traverse matrix from top left to bottom right corner. 
     """
@@ -52,17 +52,61 @@ def bottomUpDiagonalMatrixTraversal(chromosome):
     """
     revChromosome = chromosome[::-1]
     revMatrix = convertTo2DMatrix(revChromosome)
-    printMatrix(revMatrix)
-    return TopDownDiagonalMatrixTraversal(revMatrix)
+    return topDownDiagonalMatrixTraversal(revMatrix)
 
-def fitness(): 
+def topDownVerticalMatrixTraversal(matrix): 
+    """
+    Traverse matrix from top to bottom vertically. 
+    """
+    result = []
+    for i in range(8): 
+        temp = [] 
+        for j in range(8): 
+            temp.append(matrix[j][i])
+        result.append(temp)
+    return result
 
-    return
+def countQueensAttacking(matrix): 
+    """ 
+    Count number of queens attacking in matrix. 
+
+    Used in calculating fitness score. 
+    """
+    total = 0 
+    for i in matrix:
+        queen = 0 
+        for j in i: 
+            if j == "Q": 
+                queen += 1 
+        if queen > 0:
+            total += queen - 1 
+        
+    return total 
+
+def fitness(chromosome): 
+    """
+    Count how many queens are attacking horizontally and diagonally. 
+    """
+    fitnessScore = 0
+    chessboard = convertTo2DMatrix(chromosome)
+
+    # horizontally 
+    fitnessScore += countQueensAttacking(chessboard)
+
+    # vertically 
+    fitnessScore += countQueensAttacking(topDownVerticalMatrixTraversal(chessboard))
+
+    # diagonally 
+    fitnessScore += countQueensAttacking(topDownDiagonalMatrixTraversal(chessboard))
+    fitnessScore += countQueensAttacking(bottomUpDiagonalMatrixTraversal(chromosome))
+
+    return fitnessScore
 
 # populationSize = int(input("Choose starting population: "))
 # population = generateStartingPopulation(populationSize)
 # print(population[0])
 matrix = convertTo2DMatrix([2,3,0,6,4,2,7,1])
 printMatrix(matrix)
-print("\n")
-s = bottomUpDiagonalMatrixTraversal([2,3,0,6,4,2,7,1])
+print(fitness([2,3,0,6,4,2,7,1]))
+
+
