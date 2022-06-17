@@ -2,7 +2,7 @@ import random
 
 def generateStartingPopulation(size): 
     """ 
-    Generate
+    Generate starting population
     """
     populations = [] 
     for _ in range(size): 
@@ -102,11 +102,14 @@ def fitness(chromosome):
 
     return fitnessScore
 
-# populationSize = int(input("Choose starting population: "))
-# population = generateStartingPopulation(populationSize)
-# print(population[0])
-matrix = convertTo2DMatrix([2,3,0,6,4,2,7,1])
-printMatrix(matrix)
-print(fitness([2,3,0,6,4,2,7,1]))
+def main():
+
+    populationSize = int(input("Choose starting population: "))
+    population = generateStartingPopulation(populationSize)
+    print(population[0])
+    matrix = convertTo2DMatrix(population[0])
+    printMatrix(matrix)
+    print(fitness(population[0]))
 
 
+main()
