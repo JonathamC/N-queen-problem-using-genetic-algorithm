@@ -1,4 +1,5 @@
 import random
+import time
 from time import sleep 
 def generateStartingPopulation(size, numQueens): 
     """ 
@@ -185,6 +186,7 @@ def main():
         populationWithFitness = tempPopulation
         populationWithFitness = sorted(populationWithFitness, key = lambda x: x[0], reverse = False)
 
-
-
+    
+s = time.time()
 main()
+print("{:.2f} seconds".format((time.time()-s)))
